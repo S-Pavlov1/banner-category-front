@@ -1,0 +1,21 @@
+.buttonDiv{
+    justify-content: space-around;
+    margin-top: 30%;
+}
+
+.buttonCreate {
+    position: relative;
+    width: 20%;
+    background: black;
+    color: whitesmoke;
+    font-family: cursive;
+}
+
+.buttonDelete {
+    position: relative;
+    margin-left: 60%;
+    width: 20%;
+    background: red;
+    color: whitesmoke;
+    font-family: cursive;
+}

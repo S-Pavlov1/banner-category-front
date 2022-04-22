@@ -1,0 +1,11 @@
+.CategoryCreateBox{
+    margin-right: 15px;
+    width: 70%;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: black solid 1px;
+    font-family: cursive;
+    height: 720px;
+}

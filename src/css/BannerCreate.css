@@ -1,0 +1,35 @@
+.bannerCreateBox{
+    margin-right: 15px;
+    width: 70%;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: black solid 1px;
+    font-family: cursive;
+    height: 720px;
+}
+
+.bannerBoxLabel{
+    margin: 25px;
+    font-size: 25px;
+}
+
+.bannerBoxPlaceholder{
+    position: static;
+    left : 10%;
+    width: 50%;
+    height: 25px;
+}
+
+.bannerBoxField{
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.bannerBoxText {
+    vertical-align: top;
+    width: 50%;
+    resize: none;
+}
+
