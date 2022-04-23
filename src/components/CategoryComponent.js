@@ -62,6 +62,7 @@ function CategoryCreationBox(props) {
 }
 
 function CategorySearchBox(props) {
+
     const [searchResults,setSearchResults] = useState([]);
 
     const handleSearchRequestChange = value => {
@@ -125,13 +126,8 @@ function CategorySearchBox(props) {
 export default function CategoryComponent (props) {
 
     const [httpRequest, setHttpRequest] = useState("POST");
-    //let httpRequest = "POST";
 
     const [category, setCategory] = useState({name: "", requestId:""});
-    /*let category = {
-        name: "",
-        requestId: ""
-    }*/
 
     return (
         <div>
@@ -141,7 +137,6 @@ export default function CategoryComponent (props) {
                 httpRequest={httpRequest}
                 setHttpRequest={(type) => {setHttpRequest(type)}}/>
             <CategorySearchBox
-                category={category}
                 setCategory={(category)=>{setCategory(category)}}
                 setHttpRequest={(type) => {setHttpRequest(type)}}/>
         </div>
