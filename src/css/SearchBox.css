@@ -15,7 +15,6 @@
     height: 70vh;
     display: flex;
     flex-direction: column;
-    margin-left: 15px;
 }
 
 .search-Title{
@@ -35,4 +34,16 @@
     width: 100%;
     background: cornflowerblue;
     font-family: cursive;
+}
+
+.searchResultButton {
+    font-family: cursive;
+    background-color: white;
+    display: inline-block;
+    text-align: left;
+    font-size: 16px;
+}
+
+.searchResultButton :hover {
+    color: cornflowerblue;
 }
