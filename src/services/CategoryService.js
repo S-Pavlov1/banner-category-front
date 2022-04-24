@@ -25,6 +25,10 @@ class CategoryService {
     updateCategory (category) {
         return http.put(this.URL, category)
     }
+
+    getAllCategories () {
+        return http.get(this.URL)
+    }
 }
 
 export default new CategoryService();
