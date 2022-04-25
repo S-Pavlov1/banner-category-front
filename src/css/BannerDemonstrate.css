@@ -1,0 +1,14 @@
+.bannerDemonstrateBox {
+    margin-top: 140px;
+    margin-left: 15px;
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    border: black solid 1px;
+    font-family: cursive;
+    height: 420px;
+}
+
+.searchButton {
+    margin-left: 15px;
+}

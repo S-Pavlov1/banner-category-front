@@ -7,55 +7,74 @@ import "../css/Buttons.css"
 import "../css/CategoryCreateBox.css"
 import CategoryService from "../services/CategoryService"
 import {useState} from "react";
+import {useEffect} from "react";
 
 function CategoryCreationBox(props) {
 
+
     const addCategory = () => {
         console.log("creating " + props.category)
-        CategoryService.addCategory(props.category).then(response => console.log(response))
+        CategoryService.addCategory(props.category).then(response => {
+            props.alert.success("Successfully created category")
+            console.log(response)
+        }).catch(error => {props.alert.info("ERROR: " + error.response.data)})
     };
 
     const updateCategory = () => {
         console.log("updating " + props.category)
-        CategoryService.updateCategory(props.category).then(response => console.log(response))
+        CategoryService.updateCategory(props.category).then(response => {
+            props.alert.success("Successfully updated category")
+            console.log(response)
+        }).catch(error => {props.alert.info("ERROR: " + error.response.data)})
     }
 
     const deleteCategory = () => {
         console.log("deleting " + props.category)
-        CategoryService.deleteCategory(props.category.id).then(response => console.log(response))
-        props.setHttpRequest("POST")
-        clearForms()
+        CategoryService.deleteCategory(props.category.id).then(response => {
+            props.alert.success("Successfully deleted category")
+            console.log(response)
+            props.setHttpRequest("POST")
+            clearForms()
+        }).catch(error => {props.alert.info("ERROR: " + error.response.data)})
     }
 
     const clearForms = () => {
-        props.setCategory({name:"", requestId:""})
+        props.setCategory({name: "", requestId: ""})
     }
 
     const handleChangeRequestName = value => {
-        props.setCategory((prevState) => ({...prevState, requestId:value}))
+        props.setCategory((prevState) => ({...prevState, requestId: value}))
         console.log(props.category.requestId)
     }
 
     const handleChangeName = value => {
-        props.setCategory((prevState) => ({...prevState, name:value}))
+        props.setCategory((prevState) => ({...prevState, name: value}))
         console.log(props.category.name)
     }
 
-    return(
+    return (
         <div className="CategoryCreateBox">
             <FormField controlId="name"
                        label="Name"
                        value={props.category.name}
-                       onChange={(event) => {handleChangeName(event.target.value)}}/>
+                       onChange={(event) => {
+                           handleChangeName(event.target.value)
+                       }}/>
             <FormField controlId="requestName"
                        label="Request name"
                        value={props.category.requestId}
-                       onChange={(event) => {handleChangeRequestName(event.target.value)}}/>
+                       onChange={(event) => {
+                           handleChangeRequestName(event.target.value)
+                       }}/>
             <div className="buttonDiv">
                 <Button className="buttonCreate"
-                        onClick={() => {props.httpRequest === "POST" ? addCategory() : updateCategory()}}> Save </Button>
+                        onClick={() => {
+                            props.httpRequest === "POST" ? addCategory() : updateCategory()
+                        }}> Save </Button>
                 <Button className="buttonDelete"
-                        onClick={() => {props.httpRequest === "POST" ? clearForms() : deleteCategory()}}> Delete </Button>
+                        onClick={() => {
+                            props.httpRequest === "POST" ? clearForms() : deleteCategory()
+                        }}> Delete </Button>
             </div>
         </div>
     )
@@ -63,7 +82,13 @@ function CategoryCreationBox(props) {
 
 function CategorySearchBox(props) {
 
-    const [searchResults,setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
+
+    const useMountEffect = (fun) => useEffect(fun, []);
+
+    useMountEffect(() => {
+        handleSearchRequestChange("")
+    })
 
     const handleSearchRequestChange = value => {
         CategoryService.search(value).then(response => {
@@ -72,17 +97,18 @@ function CategorySearchBox(props) {
         })
     }
 
-    const onClickSearchResult = (id,name, requestId) => {
-        console.log(id+ " and " + name + " and " + requestId)
+    const onClickSearchResult = (id, name, requestId) => {
+        console.log(id + " and " + name + " and " + requestId)
         props.setHttpRequest("PUT");
-        props.setCategory({id: id, name: name, requestId:requestId})
+        props.setCategory({id: id, name: name, requestId: requestId})
     }
 
     const mapSearchResults = () => searchResults.map(
         res => (
             <Button className="searchResultButton"
                     key={res.id}
-                    onClick={() => {onClickSearchResult(res.id,res.name,res.requestId)
+                    onClick={() => {
+                        onClickSearchResult(res.id, res.name, res.requestId)
                     }}>
                 {res.name}
             </Button>
@@ -92,7 +118,7 @@ function CategorySearchBox(props) {
     const onClickCreateNewCategory = () => {
         console.log("new category");
         props.setHttpRequest("POST");
-        props.setCategory({name: "", requestId:""})
+        props.setCategory({name: "", requestId: ""})
     }
 
 
@@ -105,7 +131,9 @@ function CategorySearchBox(props) {
                 <Form>
                     <Form.Group controlId="search">
                         <Form.Control className="search-Form" placeholder="Enter name..."
-                                      onChange={(event) => {handleSearchRequestChange(event.target.value)}}/>
+                                      onChange={(event) => {
+                                          handleSearchRequestChange(event.target.value)
+                                      }}/>
                     </Form.Group>
                 </Form>
             </div>
@@ -115,7 +143,9 @@ function CategorySearchBox(props) {
             <Button
                 className="search-Button"
                 variant="primary"
-            onClick={()=>{onClickCreateNewCategory()}}>
+                onClick={() => {
+                    onClickCreateNewCategory()
+                }}>
                 Create new Category
             </Button>
         </div>
@@ -123,22 +153,31 @@ function CategorySearchBox(props) {
 }
 
 
-export default function CategoryComponent (props) {
+export default function CategoryComponent(props) {
 
     const [httpRequest, setHttpRequest] = useState("POST");
 
-    const [category, setCategory] = useState({name: "", requestId:""});
+    const [category, setCategory] = useState({name: "", requestId: ""});
 
     return (
         <div>
             <CategoryCreationBox
+                alert={props.alert}
                 category={category}
-                setCategory={(category)=>{setCategory(category)}}
+                setCategory={(category) => {
+                    setCategory(category)
+                }}
                 httpRequest={httpRequest}
-                setHttpRequest={(type) => {setHttpRequest(type)}}/>
+                setHttpRequest={(type) => {
+                    setHttpRequest(type)
+                }}/>
             <CategorySearchBox
-                setCategory={(category)=>{setCategory(category)}}
-                setHttpRequest={(type) => {setHttpRequest(type)}}/>
+                setCategory={(category) => {
+                    setCategory(category)
+                }}
+                setHttpRequest={(type) => {
+                    setHttpRequest(type)
+                }}/>
         </div>
     )
 }

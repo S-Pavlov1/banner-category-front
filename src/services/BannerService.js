@@ -25,6 +25,18 @@ class BannerService {
     updateBanner (banner) {
         return http.put(this.URL, banner)
     }
+
+    getBannerByCategories(categories) {
+        return http.get(this.URL + "/bid?" + categories.map((category) => {return "categoryIds=" + category.id + "&"}).join(''))
+    }
+
+    getBannerByCategoriesPreMadePath(path) {
+        return http.get(this.URL + path)
+    }
+
+    getRandomBanner() {
+        return http.get(this.URL + "/randomBanner")
+    }
 }
 
 export default new BannerService();
